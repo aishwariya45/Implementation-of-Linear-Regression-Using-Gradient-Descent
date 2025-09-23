@@ -8,23 +8,102 @@ To write a program to predict the profit of a city using the linear regression m
 2. Anaconda – Python 3.7 Installation / Jupyter notebook
 
 ## Algorithm
-1. 
-2. 
-3. 
-4. 
+
+1.Import necessary libraries for numerical operations, data handling, and preprocessing.
+
+2.Load the startup dataset (50_Startups.csv) using pandas.
+
+3.Extract feature matrix X and target vector y from the dataset.
+
+4.Convert feature and target values to float and reshape if necessary.
+
+5.Standardize X and y using StandardScaler.
+
+6.Add a column of ones to X to account for the bias (intercept) term.
+
+7.Initialize model parameters (theta) to zeros.
+
+8.Perform gradient descent to update theta by computing predictions and adjusting for error.
+
+9.Input a new data point, scale it, and add the intercept term.
+
+10.Predict the output using learned theta, then inverse-transform it to get the final result. 
 
 ## Program:
 ```
-/*
+
 Program to implement the linear regression using gradient descent.
-Developed by: 
-RegisterNumber:  
-*/
+Developed by: S . AISHWARIYA
+RegisterNumber:  212224240005
+
+```
+```
+
+import numpy as np
+import pandas as pd
+from sklearn.preprocessing import StandardScaler
+def linear_regression(X1, y, learning_rate=0.01, num_iters=1000):
+    # Add a column of ones to X for the intercept term
+    X = np.c_[np.ones(len(X1)), X1]
+    # Initialize theta with zeros
+    theta = np.zeros(X.shape[1]).reshape(-1,1)
+    # Perform gradient descent
+    for _ in range(num_iters):
+        # calculate prediction
+        predictions = (X).dot(theta).reshape(-1,1)
+        # calculate errors
+        errors = (predictions - y).reshape(-1,1)
+        # Update theta using gradient descent
+        theta -= learning_rate * (1/len(X1)) * X.T.dot(errors)
+    return theta
+data = pd.read_csv('50_Startups.csv')
+print(data.head())
+
+# Assuming the last column is your target variable 'y' and the preceding columns a
+X = (data.iloc[1:, :-2].values)
+print(X)
+X1 = X.astype(float)
+scaler = StandardScaler()
+y = (data.iloc[1:,-1].values).reshape(-1,1)
+print(y)
+X1_Scaled = scaler.fit_transform(X1)
+Y1_Scaled = scaler.fit_transform(y)
+print(X1_Scaled)
+print(Y1_Scaled)
+
+#Learn model parameters
+theta = linear_regression(X1_Scaled, Y1_Scaled)
+#Predict target value for a new data point
+new_data = np.array([165349.2,136897.8,471784.1]).reshape(-1,1)
+new_Scaled = scaler.fit_transform(new_data)
+prediction = np.dot(np.append(1, new_Scaled), theta)
+prediction = prediction.reshape(-1,1)
+pre = scaler.inverse_transform(prediction)
+print(f"Predicted value: {pre}")
+
 ```
 
 ## Output:
-![linear regression using gradient descent](sam.png)
+## Data information
 
+![image](https://github.com/user-attachments/assets/c26cd55a-5861-425c-9ee9-33b8ff9c0923)
+
+
+## Value of x
+
+![image](https://github.com/user-attachments/assets/abaf3965-a06a-470e-8f0e-cd26a6c5a58a)
+
+![image](https://github.com/user-attachments/assets/b2862069-a35b-496e-b1bf-a57ba691dbde)
+
+## Value of X1_scaled
+
+![image](https://github.com/user-attachments/assets/e18b6862-5c6e-4286-a446-88d83bb695d6)
+
+![image](https://github.com/user-attachments/assets/7fab1d0c-4706-4d7f-93ba-6668ed9fb188)
+
+## Predicted value
+
+![image](https://github.com/user-attachments/assets/26d25139-9f7c-4c70-9727-0a02988eb5c8)
 
 ## Result:
 Thus the program to implement the linear regression using gradient descent is written and verified using python programming.
