@@ -8,102 +8,76 @@ To write a program to predict the profit of a city using the linear regression m
 2. Anaconda – Python 3.7 Installation / Jupyter notebook
 
 ## Algorithm
+1.Import the required library and read the dataframe.
 
-1.Import necessary libraries for numerical operations, data handling, and preprocessing.
+2.Write a function computeCost to generate the cost function.
 
-2.Load the startup dataset (50_Startups.csv) using pandas.
+3.Perform iterations og gradient steps with learning rate.
 
-3.Extract feature matrix X and target vector y from the dataset.
-
-4.Convert feature and target values to float and reshape if necessary.
-
-5.Standardize X and y using StandardScaler.
-
-6.Add a column of ones to X to account for the bias (intercept) term.
-
-7.Initialize model parameters (theta) to zeros.
-
-8.Perform gradient descent to update theta by computing predictions and adjusting for error.
-
-9.Input a new data point, scale it, and add the intercept term.
-
-10.Predict the output using learned theta, then inverse-transform it to get the final result. 
+4.Plot the Cost function using Gradient Descent and generate the required graph.
 
 ## Program:
 ```
 
 Program to implement the linear regression using gradient descent.
-Developed by: S . AISHWARIYA
+Developed by:S. AISHWARIYA
 RegisterNumber:  212224240005
 
 ```
-```
-
+```python 
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
-def linear_regression(X1, y, learning_rate=0.01, num_iters=1000):
-    # Add a column of ones to X for the intercept term
-    X = np.c_[np.ones(len(X1)), X1]
-    # Initialize theta with zeros
+def linear_regression(X1,y,learning_rate = 0.1, num_iters = 1000):
+    X = np.c_[np.ones(len(X1)),X1]
     theta = np.zeros(X.shape[1]).reshape(-1,1)
-    # Perform gradient descent
+    
     for _ in range(num_iters):
-        # calculate prediction
         predictions = (X).dot(theta).reshape(-1,1)
-        # calculate errors
-        errors = (predictions - y).reshape(-1,1)
-        # Update theta using gradient descent
-        theta -= learning_rate * (1/len(X1)) * X.T.dot(errors)
+        errors=(predictions - y ).reshape(-1,1)
+        theta -= learning_rate*(1/len(X1))*X.T.dot(errors)
     return theta
-data = pd.read_csv('50_Startups.csv')
-print(data.head())
-
-# Assuming the last column is your target variable 'y' and the preceding columns a
-X = (data.iloc[1:, :-2].values)
+data=pd.read_csv("50_Startups.csv")
+data.head()
+X=(data.iloc[1:,:-2].values)
+X1=X.astype(float)
+scaler=StandardScaler()
+y=(data.iloc[1:,-1].values).reshape(-1,1)
+X1_Scaled=scaler.fit_transform(X1)
+Y1_Scaled=scaler.fit_transform(y)
 print(X)
-X1 = X.astype(float)
-scaler = StandardScaler()
-y = (data.iloc[1:,-1].values).reshape(-1,1)
-print(y)
-X1_Scaled = scaler.fit_transform(X1)
-Y1_Scaled = scaler.fit_transform(y)
 print(X1_Scaled)
-print(Y1_Scaled)
-
-#Learn model parameters
-theta = linear_regression(X1_Scaled, Y1_Scaled)
-#Predict target value for a new data point
-new_data = np.array([165349.2,136897.8,471784.1]).reshape(-1,1)
-new_Scaled = scaler.fit_transform(new_data)
-prediction = np.dot(np.append(1, new_Scaled), theta)
-prediction = prediction.reshape(-1,1)
-pre = scaler.inverse_transform(prediction)
+theta= linear_regression(X1_Scaled,Y1_Scaled)
+new_data=np.array([165349.2,136897.8,471784.1]).reshape(-1,1)
+new_Scaled=scaler.fit_transform(new_data)
+prediction=np.dot(np.append(1,new_Scaled),theta)
+prediction=prediction.reshape(-1,1)
+pre=scaler.inverse_transform(prediction)
+print(prediction)
 print(f"Predicted value: {pre}")
-
 ```
 
 ## Output:
-## Data information
 
-![image](https://github.com/user-attachments/assets/c26cd55a-5861-425c-9ee9-33b8ff9c0923)
+### data information
+
+![image](https://github.com/HIRU-VIRU/Implementation-of-Linear-Regression-Using-Gradient-Descent/assets/145972122/62833b13-f0ee-48f0-8d66-67635e4404e6)
 
 
-## Value of x
+### Value of x
+![image](https://github.com/HIRU-VIRU/Implementation-of-Linear-Regression-Using-Gradient-Descent/assets/145972122/a026977b-70de-475a-bf0d-65918be7158d)
 
-![image](https://github.com/user-attachments/assets/abaf3965-a06a-470e-8f0e-cd26a6c5a58a)
 
-![image](https://github.com/user-attachments/assets/b2862069-a35b-496e-b1bf-a57ba691dbde)
+### Value of X1_scaled
 
-## Value of X1_scaled
+![image](https://github.com/HIRU-VIRU/Implementation-of-Linear-Regression-Using-Gradient-Descent/assets/145972122/ee49a231-be1b-47f9-8d73-18fd9c7ca74c)
 
-![image](https://github.com/user-attachments/assets/e18b6862-5c6e-4286-a446-88d83bb695d6)
 
-![image](https://github.com/user-attachments/assets/7fab1d0c-4706-4d7f-93ba-6668ed9fb188)
+### predicted value
 
-## Predicted value
+![image](https://github.com/HIRU-VIRU/Implementation-of-Linear-Regression-Using-Gradient-Descent/assets/145972122/027aab37-9706-48c9-b5ed-32b92b60ba12)
 
-![image](https://github.com/user-attachments/assets/26d25139-9f7c-4c70-9727-0a02988eb5c8)
+
 
 ## Result:
 Thus the program to implement the linear regression using gradient descent is written and verified using python programming.
